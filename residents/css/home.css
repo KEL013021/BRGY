@@ -1,0 +1,87 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  background-color: #E6F0F7;
+  font-family: 'Arial', sans-serif;
+}
+
+.header {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-bottom-left-radius: 25px;
+  border-bottom-right-radius: 25px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+  background: rgba(55, 120, 194, 0.8933);
+
+  position: fixed;  /* ✅ laging nasa taas */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  height: 80px; /* 🔑 fixed height */
+}
+
+.logo-text {
+  font-size: 36px;
+  font-weight: bold;
+  margin-left: 50px;
+}
+.logo-text .g {
+  color: yellow;
+}
+
+main.content {
+  padding-top: 90px;  /* para di matabunan ng header */
+  padding-bottom: 80px; /* kung meron kang tabbar sa baba */
+  margin: 0 15px;
+  position: fixed;  /* ✅ laging nasa taas */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  height: 80px; /* 🔑 fixed height */
+}
+
+.welcome-box {
+  background: #7A97C6;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #fff;
+}
+
+.announcement-card {
+  background: #7A97C6;
+  margin: 20px;
+  padding: 15px;
+  border-radius: 10px;
+  color: #fff;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+}
+
+.announcement-card h5 {
+  text-align: center;
+  font-weight: bold;
+}
+.announcement-card img {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.announcement-card p {
+  text-align: justify;
+  margin-top: 10px;
+}
+.posted-on {
+  text-align: right;
+  font-size: 12px;
+  opacity: 0.9;
+}

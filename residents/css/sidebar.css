@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+
+html, body {
+  height: 100%;
+  min-height: 100%;
+  background: linear-gradient(#F1F3FF, #CBD4FF);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+
+/* Bootstrap Icons adjustments */
+.bi {
+  font-size: 24px;
+  -webkit-text-stroke: 0.7px currentColor;
+}
+
+.nav-label,
+.nav-item {
+  font-size: 17px;
+}
+
+.nav-link.dropdown-toggle::after {
+  display: none !important;
+}
+
+/* Sidebar Base (always visible desktop) */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 70;
+  width: 270px;
+  height: 100vh;
+  min-height: 100vh;
+  background: #151A2D;
+  transition: all 0.5s ease;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+/* ✅ Mobile hidden by default */
+@media (max-width: 768px) {
+  .sidebar {
+    transform: translateX(-100%);
+    border-radius: 0; /* flat edges for mobile */
+  }
+  .sidebar.active {
+    transform: translateX(0); /* show when hamburger clicked */
+  }
+}
+
+/* Branding */
+.brgy-text {
+  color: #FFD700; /* Yellow */
+}
+.go-text {
+  color: #ffffff; /* White */
+}
+
+/* Sidebar Header */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 20px;
+}
+
+.sidebar-logo-text {
+  color: #EEF2FF;
+  font-size: 2.5rem;
+  font-weight: 750;
+  margin-right: auto;
+  padding-left: 10px;
+  line-height: 35px;
+  white-space: nowrap;
+  flex-shrink: 1;
+  overflow: hidden;
+  transition: opacity 0.5s ease, visibility 0.5s ease, padding 0.5s ease;
+}
+
+/* Sidebar Nav */
+.sidebar-nav .nav-list {
+  list-style: none;
+  display: flex;
+  gap: 4px;
+  padding: 5px 15px 0 15px;
+  flex-direction: column;
+  transition: 0.4s ease;
+}
+
+.sidebar .sidebar-nav .primary-nav {
+  overflow-y: auto;
+  scrollbar-width: thin;
+  padding-bottom: 20px;
+  height: calc(100dvh - 100px);
+  scrollbar-color: transparent transparent;
+}
+.sidebar .sidebar-nav .primary-nav:hover {
+  scrollbar-color: #EEF2FF transparent;
+}
+
+/* Nav Links */
+.sidebar-nav .nav-item .nav-link {
+  color: #fff;
+  display: flex;
+  gap: 12px;
+  white-space: nowrap;
+  border-radius: 8px;
+  padding: 6px 15px;
+  align-items: center;
+  text-decoration: none;
+  border: 1px solid #151A2D;
+  transition: 0.4s ease;
+}
+.sidebar-nav .nav-item:is(:hover, .open) > .nav-link:not(.dropdown-title) {
+  color: #151A2D;
+  background: #EEF2FF;
+}
+
+/* Secondary Nav (bottom) */
+.sidebar-nav .secondary-nav {
+  position: absolute;
+  bottom: 30px; /* dati naka 10px, gawin mong 0 */
+  width: 100%;
+  background: #151A2D;
+  z-index: 99; /* taasan para nasa ibabaw */
+
+}
+
+
+/* Dropdown */
+.sidebar-nav .dropdown-container .dropdown-icon {
+  margin: 0 -4px 0 auto;
+  transition: transform 0.4s ease;
+}
+.sidebar-nav .dropdown-container.open .dropdown-icon {
+  transform: rotate(180deg);
+}
+.sidebar-nav .custom-dropdown-menu {
+  height: 0;
+  overflow: hidden;
+  list-style: none;
+  padding-left: 15px;
+  transition: height 0.4s ease;
+}
+.custom-dropdown-menu .nav-item .nav-link {
+  color: #F1F4FF;
+  padding: 9px 15px;
+}
+
+/* Hamburger button */
+.sidebar-menu-button {
+  position: fixed;
+  left: 10px;
+  top: 20px;
+  height: 42px;
+  width: 45px;
+  display: flex; /* lagi siyang naka-flex, no display:none */
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  z-index: 20;
+  opacity: 1;
+  pointer-events: auto;
+  transition: all 0.4s ease;
+}
+.sidebar-menu-button i {
+  font-size: 2.2rem;
+}
+
+/* Effect kapag nag-hide */
+.sidebar-menu-button.hide-with-effect {
+  opacity: 0;
+  pointer-events: none; /* di na clickable habang hidden */
+}
+
+/* Effect kapag nag-show */
+.sidebar-menu-button.show-with-effect {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+/* Show hamburger only on mobile */
+@media (min-width: 769px) {
+  .sidebar-menu-button {
+    display: none; /* desktop hidden */
+  }
+}
