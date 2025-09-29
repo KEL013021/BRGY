@@ -117,7 +117,7 @@ if ($result && mysqli_num_rows($result) > 0) {
         }
 
         echo '<tr class="table-row" data-id="' . $row['id'] . '" 
-                data-service="' . htmlspecialchars($row['service_name']) . '" 
+                data-service="' . htmlspecialchars($row['service_name'] ?? '') . '" 
                 data-resident="' . htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) . '" 
                 style="cursor:pointer;">';
         echo '<td class="table-cell name-text" style="width:250px;">' . htmlspecialchars($row['last_name'] . ', ' . $row['first_name']) . '</td>';
