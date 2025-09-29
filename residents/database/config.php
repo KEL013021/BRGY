@@ -1,10 +1,11 @@
 <?php
-$host = 'localhost';
-$user = 'root';
-$password = ''; // default XAMPP password
-$db = 'brgygo'; // make sure your database name is correct
+$host = getenv('DB_HOST');
+$user = getenv('DB_USER');
+$password = getenv('DB_PASS');
+$db = getenv('DB_NAME');
+$port = getenv('DB_PORT');
 
-$conn = mysqli_connect($host, $user, $password, $db);
+$conn = mysqli_connect($host, $user, $password, $db, $port);
 
 if (!$conn) {
     die("Connection failed: " . mysqli_connect_error());
