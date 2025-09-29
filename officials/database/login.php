@@ -31,7 +31,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             if ($row['role'] === "admin") {
                 header("Location: ../section/dashboard.php");
             } else {
-                header("Location: resident_dashboard.php");
+                header("Location: ../../residents/section/home.php");
             }
             exit;
         } else {

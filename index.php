@@ -4,7 +4,7 @@
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>BRGY GO</title>
-  <link href="../bootstrap5/css/bootstrap.min.css" rel="stylesheet"/>
+  <link href="officials/bootstrap5/css/bootstrap.min.css" rel="stylesheet"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
   <!-- Select2 CSS -->
@@ -13,14 +13,14 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <!-- Select2 JS -->
   <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-  <script src="../ajax/ph-address-selector.js"></script> <!-- yung script mo for PH address -->
-  <link rel="stylesheet" href="../css/login.css"/>
+  <script src="officials/ajax/ph-address-selector.js"></script> <!-- yung script mo for PH address -->
+  <link rel="stylesheet" href="officials/css/login.css"/>
 </head>
 <body>
     <!-- Sign Up -->
     <div class="container" id="container">
     <div class="form-container sign-up">
-      <form id="signupForm" action="../database/signup.php" method="POST">
+      <form id="signupForm" action="officials/database/signup.php" method="POST">
         <h2 class="header">Create Account</h2>
         
         <!-- STEP 1 -->
@@ -83,9 +83,9 @@
 
     <!-- Sign In -->
     <div class="form-container sign-in">
-      <form action="../database/login.php" method="POST">
+      <form action="officials/database/login.php" method="POST">
         <h2 class="header">Log In</h2>
-        <input type="email" name="email" placeholder="Email" required / style="z-index: 20;">
+        <input type="email" name="email" placeholder="Email" required />
         <div class="position-relative w-100">
           <input type="password" name="password" placeholder="Password" id="signinPassword" required>
           <i class="bi bi-eye-slash-fill fs-5" id="toggleSigninPassword"></i>
@@ -98,15 +98,15 @@
     <!-- Toggle Panels -->
     <div class="toggle-container">
       <div class="toggle">
-        <div class="toggle-panel toggle-right" style="align-items: center;">
-          <h2>Hello, Friend!</h2>
-          <p>Enter your details and start your journey with us</p>
-          <button class="hidden" id="register">Sign Up</button>
-        </div>
         <div class="toggle-panel toggle-left" style="align-items: center;">
           <h2>Welcome Back!</h2>
           <p>To stay connected, please login with your info</p>
           <button class="hidden" id="login">Log In</button>
+        </div>
+        <div class="toggle-panel toggle-right" style="align-items: center;">
+          <h2>Hello, Friend!</h2>
+          <p>Enter your details and start your journey with us</p>
+          <button class="hidden" id="register">Sign Up</button>
         </div>
       </div>
     </div>
@@ -132,10 +132,9 @@
       </div>
     </div>
   </div>
+
 </div>
-
-
-<script src="../bootstrap5/js/bootstrap.bundle.min.js"></script>
+<script src="officials/bootstrap5/js/bootstrap.bundle.min.js"></script>
 <script>
   const container = document.getElementById("container");
   document.getElementById("register").addEventListener("click", () => container.classList.add("active"));

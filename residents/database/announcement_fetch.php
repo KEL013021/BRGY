@@ -35,7 +35,7 @@ if ($address_id !== null) {
     while ($row = $result->fetch_assoc()) {
         // ✅ Buoin ang full image path kung may laman
         if (!empty($row['image'])) {
-            $row['image'] = "../../BRGYGO/uploads/announcement/" . $row['image'];
+            $row['image'] = "../../officials/uploads/announcement/" . $row['image'];
         }
         $announcements[] = $row;
     }
