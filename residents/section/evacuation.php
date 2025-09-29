@@ -1,18 +1,15 @@
 <?php 
 session_start();
-
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../../index.php");
-    exit;
-}
 include 'sidebar.php';
 include '../database/config.php';
 
+// ✅ Check kung naka-login
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../../BRGYGO/login_signup.php");
+    exit;
+}
 
-
-
-// Kunin resident info
-$user_id = $_SESSION['user_id']; // ✅ idagdag ito bago gamitin
+$user_id = $_SESSION['user_id'];
 $res = $conn->prepare("SELECT address_id FROM residents WHERE user_id=?");
 $res->bind_param("i", $user_id);
 
