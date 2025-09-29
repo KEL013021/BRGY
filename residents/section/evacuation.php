@@ -1,13 +1,15 @@
 <?php 
 session_start();
-include 'sidebar.php';
-include '../database/config.php';
-
 
 if (!isset($_SESSION['user_id'])) {
     header("Location: ../../index.php");
     exit;
 }
+include 'sidebar.php';
+include '../database/config.php';
+
+
+
 
 // Kunin resident info
 $res = $conn->prepare("SELECT address_id FROM residents WHERE user_id=?");
