@@ -118,7 +118,9 @@
         let dropdown = $('#region');
         setPlaceholder(dropdown, 'Choose Region');
 
-        const url = '/ajax/ph-json/region.json';
+        const scriptPath = $('script[src$="ph-address-selector.js"]').attr('src').replace('ph-address-selector.js', '');
+const url = scriptPath + 'ph-json/region.json';
+
         $.getJSON(url, function (data) {
             $.each(data, function (key, entry) {
                 dropdown.append(
