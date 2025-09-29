@@ -30,19 +30,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($check->num_rows > 0) {
         echo "Email already registered.";
     } else {
-        // Insert user first
+        // Insert user
         $stmt = $conn->prepare("INSERT INTO users (email, password, agreed_terms, status, role) VALUES (?, ?, ?, 'offline', ?)");
         $stmt->bind_param("ssis", $email, $hashedPassword, $toa, $role);
 
         if ($stmt->execute()) {
-            // Get the newly inserted user's ID
             $user_id = $stmt->insert_id;
 
-            // Insert address linked to the user
-            $addr_stmt = $conn->prepare("INSERT INTO address (user_id, region, province, city, barangay) VALUES (?, ?, ?, ?, ?)");
-            $addr_stmt->bind_param("issss", $user_id, $region, $province, $city, $barangay);
-            $addr_stmt->execute();
-            $addr_stmt->close();
+            // Check if address exists
+            $addr_check = $conn->prepare("SELECT address_id FROM address WHERE region = ? AND province = ? AND city = ? AND barangay = ?");
+            $addr_check->bind_param("ssss", $region, $province, $city, $barangay);
+            $addr_check->execute();
+            $addr_check->store_result();
+
+            if ($addr_check->num_rows > 0) {
+                $addr_check->bind_result($address_id);
+                $addr_check->fetch();
+            } else {
+                $addr_stmt = $conn->prepare("INSERT INTO address (region, province, city, barangay) VALUES (?, ?, ?, ?)");
+                $addr_stmt->bind_param("ssss", $region, $province, $city, $barangay);
+                $addr_stmt->execute();
+                $address_id = $addr_stmt->insert_id;
+                $addr_stmt->close();
+            }
+            $addr_check->close();
+
+            // Insert into residents table
+            $res_stmt = $conn->prepare("
+                INSERT INTO residents (user_id, address_id, email_address, created_at) 
+                VALUES (?, ?, ?, NOW())
+            ");
+            $res_stmt->bind_param("iis", $user_id, $address_id, $email);
+            $res_stmt->execute();
+            $res_stmt->close();
 
             header("Location: ../section/login_signup.php?success=1");
             exit;
@@ -56,3 +76,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $conn->close();
 }
 ?>
+
