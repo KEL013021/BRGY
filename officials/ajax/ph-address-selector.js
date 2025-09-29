@@ -26,7 +26,8 @@
             setPlaceholder(barangay, 'Choose Barangay');
 
             // load provinces
-            var url = '/ajax/ph-json/province.json';
+            const scriptPath = $('script[src$="ph-address-selector.js"]').attr('src').replace('ph-address-selector.js', '');
+const url = scriptPath + 'ph-json/region.json';
             $.getJSON(url, function (data) {
                 var result = data.filter(value => value.region_code == region_code);
 
@@ -57,7 +58,8 @@
             setPlaceholder(city, 'Choose City/Municipality');
             setPlaceholder(barangay, 'Choose Barangay');
 
-            var url = '/ajax/ph-json/city.json';
+            const scriptPath = $('script[src$="ph-address-selector.js"]').attr('src').replace('ph-address-selector.js', '');
+const url = scriptPath + 'ph-json/region.json';
             $.getJSON(url, function (data) {
                 var result = data.filter(value => value.province_code == province_code);
 
@@ -84,7 +86,8 @@
             let barangay = $('#barangay');
             setPlaceholder(barangay, 'Choose Barangay');
 
-            var url = '/ajax/ph-json/barangay.json';
+            const scriptPath = $('script[src$="ph-address-selector.js"]').attr('src').replace('ph-address-selector.js', '');
+const url = scriptPath + 'ph-json/region.json';
             $.getJSON(url, function (data) {
                 var result = data.filter(value => value.city_code == city_code);
 
