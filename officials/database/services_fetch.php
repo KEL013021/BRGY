@@ -13,7 +13,7 @@ $result = $stmt->get_result();
 if ($row = $result->fetch_assoc()) {
     // Buoin yung URL ng PDF file
     $row['pdf_template'] = $row['pdf_template'] 
-        ? "/../pdf_templates/" . $row['pdf_template'] 
+        ? "../pdf_templates/" . $row['pdf_template'] 
         : null;
 
     echo json_encode($row);
