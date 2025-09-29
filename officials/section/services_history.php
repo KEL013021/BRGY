@@ -121,8 +121,8 @@ if ($result && mysqli_num_rows($result) > 0) {
                 data-resident="' . htmlspecialchars($row['first_name'] . ' ' . $row['last_name']) . '" 
                 style="cursor:pointer;">';
         echo '<td class="table-cell name-text" style="width:250px;">' . htmlspecialchars($row['last_name'] . ', ' . $row['first_name']) . '</td>';
-        echo '<td class="table-cell name-text" style="width:250px;">' . htmlspecialchars($row['service_name']) . '</td>';
-        echo '<td class="table-cell info-text" style="width:260px;">' . htmlspecialchars($row['purpose']) . '</td>';
+        echo '<td class="table-cell name-text" style="width:250px;">' . htmlspecialchars($row['service_name'] ?? '') . '</td>';
+        echo '<td class="table-cell info-text" style="width:260px;">' . htmlspecialchars($row['purpose'] ?? '') . '</td>';
         echo '<td class="table-cell info-text" style="width:170px;">' . htmlspecialchars($row['request_date']) . '</td>';
         echo '<td class="table-cell info-text ' . $statusClass . '" style="width:150px;">' . $statusText . '</td>';
         echo '</tr>';
