@@ -20,7 +20,7 @@ if ($row = $result->fetch_assoc()) {
 
     if (!empty($row['pdf_template'])) {
         // ✅ Use relative path para automatic na HTTPS or HTTP depende sa page
-        $pdfUrl = "/pdf_templates/" . $row['pdf_template'];
+        $pdfUrl = "/officials/pdf_templates/" . $row['pdf_template'];
     }
 
     echo json_encode([
