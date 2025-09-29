@@ -12,8 +12,10 @@ include '../database/config.php';
 
 
 // Kunin resident info
+$user_id = $_SESSION['user_id']; // ✅ idagdag ito bago gamitin
 $res = $conn->prepare("SELECT address_id FROM residents WHERE user_id=?");
 $res->bind_param("i", $user_id);
+
 $res->execute();
 $resRow = $res->get_result()->fetch_assoc();
 
