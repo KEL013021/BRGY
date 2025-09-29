@@ -9,35 +9,60 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $province   = $_POST['province'];
     $city       = $_POST['city'];
     $barangay   = $_POST['barangay'];
-    $toa        = isset($_POST['terms']) ? 1 : 0; // checkbox
-    $role       = "resident"; // default
+    $toa        = isset($_POST['terms']) ? 1 : 0;
+    $role       = "resident";
 
-    // Password match
+    // Password match check
     if ($password !== $confirm) {
         echo "Passwords do not match.";
         exit;
     }
 
-    // Hash password
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-    // Check existing email
-    $check = $conn->prepare("SELECT email FROM users WHERE email = ?");
-    $check->bind_param("s", $email);
-    $check->execute();
-    $check->store_result();
+    // ✅ Check if email already exists in users
+    $checkUser = $conn->prepare("SELECT id FROM users WHERE email = ?");
+    $checkUser->bind_param("s", $email);
+    $checkUser->execute();
+    $checkUser->store_result();
 
-    if ($check->num_rows > 0) {
+    if ($checkUser->num_rows > 0) {
         echo "Email already registered.";
-    } else {
-        // Insert user
-        $stmt = $conn->prepare("INSERT INTO users (email, password, agreed_terms, status, role) VALUES (?, ?, ?, 'offline', ?)");
-        $stmt->bind_param("ssis", $email, $hashedPassword, $toa, $role);
+        $checkUser->close();
+        exit;
+    }
+    $checkUser->close();
 
-        if ($stmt->execute()) {
-            $user_id = $stmt->insert_id;
+    // ✅ Check if email exists in residents
+    $checkResident = $conn->prepare("SELECT id, user_id FROM residents WHERE email_address = ?");
+    $checkResident->bind_param("s", $email);
+    $checkResident->execute();
+    $checkResident->store_result();
 
-            // Check if address exists
+    $residentId = null;
+    $residentUserId = null;
+
+    if ($checkResident->num_rows > 0) {
+        $checkResident->bind_result($residentId, $residentUserId);
+        $checkResident->fetch();
+    }
+    $checkResident->close();
+
+    // ✅ Create user account
+    $stmt = $conn->prepare("INSERT INTO users (email, password, agreed_terms, status, role) VALUES (?, ?, ?, 'offline', ?)");
+    $stmt->bind_param("ssis", $email, $hashedPassword, $toa, $role);
+
+    if ($stmt->execute()) {
+        $user_id = $stmt->insert_id;
+
+        if ($residentId) {
+            // Case 1: May existing resident record → update link
+            $updateRes = $conn->prepare("UPDATE residents SET user_id = ? WHERE id = ?");
+            $updateRes->bind_param("ii", $user_id, $residentId);
+            $updateRes->execute();
+            $updateRes->close();
+        } else {
+            // Case 2: Wala pang resident record → create address then insert resident
             $addr_check = $conn->prepare("SELECT address_id FROM address WHERE region = ? AND province = ? AND city = ? AND barangay = ?");
             $addr_check->bind_param("ssss", $region, $province, $city, $barangay);
             $addr_check->execute();
@@ -56,24 +81,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $addr_check->close();
 
             // Insert into residents table
-            $res_stmt = $conn->prepare("
-                INSERT INTO residents (user_id, address_id, email_address, created_at) 
-                VALUES (?, ?, ?, NOW())
-            ");
+            $res_stmt = $conn->prepare("INSERT INTO residents (user_id, address_id, email_address, created_at) VALUES (?, ?, ?, NOW())");
             $res_stmt->bind_param("iis", $user_id, $address_id, $email);
             $res_stmt->execute();
             $res_stmt->close();
-
-            header("Location: ../section/login_signup.php?success=1");
-            exit;
-        } else {
-            echo "Error: " . $stmt->error;
         }
-        $stmt->close();
+
+        header("Location: ../section/login_signup.php?success=1");
+        exit;
+    } else {
+        echo "Error: " . $stmt->error;
     }
 
-    $check->close();
+    $stmt->close();
     $conn->close();
 }
 ?>
-
