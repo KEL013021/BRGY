@@ -6,5 +6,5 @@ session_unset();
 session_destroy();
 
 // Redirect to login page
-header("Location: ../section/login_signup.php");
+header("Location: ../../index.php");
 exit;
